@@ -113,6 +113,9 @@ bower_components
 *.iws
 .idea_modules/
 
+# js config files
+config.js
+
 # Logs and databases
 *.log
 *.sql
