@@ -7,9 +7,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Weather Dashboard</h1>
     <form id="weatherForm">
-        <input type="text" id="cityInput" placeholder="Enter a city name">
+        <!-- Updated input field with a list attribute -->
+        <input type="text" id="cityInput" placeholder="Enter a city name" list="capitalsList">
+        <!-- Datalist element with option elements for capitals -->
+        <datalist id="capitalsList">
+            <!-- Add more capitals as needed -->
+        <script src="cities.js"></script>
+        </datalist>
         <button type="submit">Get Weather</button>
     </form>
     <div id="weatherResult">
