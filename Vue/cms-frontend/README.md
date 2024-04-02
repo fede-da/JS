@@ -1,6 +1,7 @@
 # cms-frontend
 
 ## Project setup
+Navigate through the root folder where **package.json** is located and run
 ```
 npm install
 ```
