@@ -103,25 +103,26 @@
         >awesome-vue</a>
       </li>
     </ul>
+    <chat />
   </div>
-  <custom-quote></custom-quote>
 </template>
 
 <script>
-
-// import Quote from '../blazor/'
+import Chat from './AcsChatbox/Chat.vue' 
 
 export default {
   name: 'HelloWorld',
+  components: {
+    Chat // Register the Chat component locally
+  },
   props: {
     msg: {
       type: String,
-      default: 'Hello World'  // Providing a default value
+      default: 'Hello World'
     }
   }
 }
 </script>
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h3 {
