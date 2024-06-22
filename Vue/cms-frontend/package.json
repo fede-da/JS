@@ -1,9 +1,12 @@
 {
+  "homepage": "http://fede-da.github.io/JS/tree/main/Vue/cms-frontend",
   "name": "cms-frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
@@ -19,7 +22,8 @@
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "eslint": "^7.32.0",
-    "eslint-plugin-vue": "^9.25.0"
+    "eslint-plugin-vue": "^9.25.0",
+    "gh-pages": "^6.1.1"
   },
   "eslintConfig": {
     "root": true,
