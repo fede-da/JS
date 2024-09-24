@@ -1,38 +1,33 @@
 <template>
   <div :class="['message', messageType]">
-    {{ text }}
+    <slot>Default message</slot>
   </div>
 </template>
-  
-  <script>
-  export default {
-    props: {
-      text: {
-        type: String,
-        default: 'Default text' 
-      },
-      messageType: {
-        type: String,
-        default: 'userMessage'  
-      }
+
+<script>
+export default {
+  props: {
+    messageType: {
+      type: String,
+      default: 'default-message'
     }
-  };
-  </script>
-  
-  <style scoped>
-  .message {
-    padding: 10px;
-    margin-bottom: 5px;
-    border-radius: 5px;
-    max-width: 80%;
   }
-  .userMessage {
-    background-color: #daf1da;
-    align-self: flex-end;
-  }
-  .systemMessage {
-    background-color: #f1f1da;
-    align-self: flex-start;
-  }
-  </style>
-  
+};
+</script>
+
+<style scoped>
+.message {
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  max-width: 70%;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.default-message {
+  background-color: #efff0a;
+  align-self: flex-start;
+  text-align: left;
+}
+</style>

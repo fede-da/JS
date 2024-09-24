@@ -1,49 +1,72 @@
+<!-- Chatwindow.vue -->
 <template>
   <div class="chat-window">
-    <Message
+    <component
       v-for="msg in messages"
+      :is="getComponent(msg.messageType)"
       :key="msg.id"
-      :text="msg.text"
-      :message-type="msg.type"
-    />
+    >
+      {{ msg.text }}
+    </component>
   </div>
-  <Chatbox @message-sent="handleNewMessage" ></Chatbox>
+  <Chatbox @message-sent="handleNewMessage"></Chatbox>
 </template>
-  
+
 <script>
 import Chatbox from './Chatbox.vue';
 import Message from './Message.vue';
+import UserMessage from './UserMessage.vue';
+import SystemMessage from './SystemMessage.vue';
 
 export default {
   components: {
     Chatbox,
-    Message
+    Message,
+    UserMessage,
+    SystemMessage
   },
   data() {
     return {
-      messages: []
+      messages: [
+        {
+          id: 1,
+          text: 'Ciao, come posso aiutarti?',
+          messageType: 'systemMessage'
+        },
+        {
+          id: 2,
+          text: 'Ho bisogno di informazioni sul vostro servizio.',
+          messageType: 'userMessage'
+        }
+      ]
     };
   },
+  computed: {
+    componentMap() {
+      return {
+        'userMessage': UserMessage,
+        'systemMessage': SystemMessage
+      };
+    }
+  },
   methods: {
-  handleNewMessage(newMsgText) {
-    const newMsg = {
-      id: Date.now(),  
-      text: newMsgText,
-      messageType: 'userMessage' 
-    };
-    this.messages.push(newMsg);
+    getComponent(messageType) {
+      return this.componentMap[messageType] || Message;
+    },
+    handleNewMessage(message) {
+      message.id = Date.now();
+      this.messages.push(message);
+    }
   }
-}
-
 };
 </script>
-  
-  <style scoped>
-  .chat-window {
-    height: 300px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-  }
-  </style>
-  
+
+<style scoped>
+.chat-window {
+  height: 100%;
+  overflow-y: auto;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+}
+</style>
