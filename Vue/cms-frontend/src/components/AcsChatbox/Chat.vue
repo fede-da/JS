@@ -16,9 +16,9 @@
 
     }
   };
-  </script>
+</script>
   
-  <style scoped>
+<style>
   .chat-container {
     position: fixed; /* Positions the element relative to the viewport */
     bottom: 20px;       /* Aligns the element to the bottom of the viewport */
@@ -30,5 +30,13 @@
     border: 1px solid #ccc;
     padding: 10px;
   }
-  </style>
+
+  /* Stili per dispositivi mobili */
+  @media (max-width: 768px) {
+    .chat-container {
+      width: 90vw;
+      height: 60vh;
+    }
+  }
+</style>
   
