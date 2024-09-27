@@ -9,7 +9,7 @@
     >
       {{ msg.text }}
     </component>
-  </div>
+  </div>  
   <Chatbox @message-sent="handleNewMessage"></Chatbox>
 </template>
 
@@ -85,7 +85,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  height: 300px; /* Regola l'altezza secondo le tue necessità */
+  height: 80%; /* Regola l'altezza secondo le tue necessità */
   overflow-y: auto;
 }
 </style>

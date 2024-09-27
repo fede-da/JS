@@ -1,5 +1,8 @@
-<template>
+<template>  
   <div class="chat-container">
+    <div class="chat-window-top-heading">
+      <p class="text-content">3FS Customer Support</p>
+    </div>
     <Chatwindow />
   </div>
 </template>
@@ -19,24 +22,48 @@
 </script>
   
 <style>
-  .chat-container {
-    position: fixed; /* Positions the element relative to the viewport */
-    bottom: 20px;       /* Aligns the element to the bottom of the viewport */
-    right: 20px; 
-    display: flex;
-    flex-direction: column;
-    height: 40vh;
-    width: 30vw;
-    border: 1px solid #ccc;
-    padding: 10px;
-  }
+.chat-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px; 
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  width: 60vw;
+  border: 1px solid #ccc;
+  border-top-left-radius: 48px;
+  border-top-right-radius: 48px;
+  padding: 10px;
+  padding-top: 8px;  /* Aggiunge spazio in alto per l'effetto */
+  background-color: white;
+  overflow: hidden;  /* Nasconde gli elementi che escono dai bordi arrotondati */
+}
 
-  /* Stili per dispositivi mobili */
-  @media (max-width: 768px) {
-    .chat-container {
-      width: 90vw;
-      height: 60vh;
-    }
+.chat-window-top-heading {
+  height: 5%;
+  background-color: #16AD8D;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-top-left-radius: 48px;
+  border-top-right-radius: 48px;
+}
+
+.chat-window-top-heading .text-content {
+  color: #ffffff;
+  font-family: 'Arial', sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
+}
+
+/* Stili per dispositivi mobili */
+@media (max-width: 768px) {
+  .chat-container {
+    width: 90vw;
+    height: 60vh;
   }
+}
 </style>
-  
