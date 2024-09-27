@@ -63,6 +63,7 @@ export default {
 .chatbox {
   display: flex;      
   align-items: flex-end; 
+  height: 20%;
   margin-top: 10px;
 }
 
@@ -83,7 +84,7 @@ export default {
   font-size: 16px;
   line-height: 1.5;
   border: none;
-  background-color: #007BFF;
+  background-color: #16AD8D;
   color: white;
   border-radius: 5px;
   cursor: pointer;

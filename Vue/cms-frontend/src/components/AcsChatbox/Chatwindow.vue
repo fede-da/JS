@@ -1,14 +1,15 @@
-<!-- Chatwindow.vue -->
 <template>
-  <div class="chat-window">
+  <div class="chat-window" ref="chatWindow">
     <component
-      v-for="msg in messages"
+      v-for="(msg) in messages"
       :is="getComponent(msg.messageType)"
       :key="msg.id"
+      v-bind="msg"
+      ref="message"
     >
       {{ msg.text }}
     </component>
-  </div>
+  </div>  
   <Chatbox @message-sent="handleNewMessage"></Chatbox>
 </template>
 
@@ -44,10 +45,13 @@ export default {
   computed: {
     componentMap() {
       return {
-        'userMessage': UserMessage,
-        'systemMessage': SystemMessage
+        userMessage: UserMessage,
+        systemMessage: SystemMessage
       };
     }
+  },
+  mounted() {
+    this.scrollToLastMessage();
   },
   methods: {
     getComponent(messageType) {
@@ -56,6 +60,21 @@ export default {
     handleNewMessage(message) {
       message.id = Date.now();
       this.messages.push(message);
+      this.$nextTick(() => {
+        this.scrollToLastMessage();
+      });
+    },
+    scrollToLastMessage() {
+      const chatWindow = this.$refs.chatWindow;
+      const messages = this.$refs.message;
+      if (chatWindow && messages && messages.length > 0) {
+        const lastMessageComponent = messages[messages.length - 1];
+        const lastMessageElement = lastMessageComponent.$el || lastMessageComponent;
+        if (lastMessageElement) {
+          const offsetTop = lastMessageElement.offsetTop;
+          chatWindow.scrollTop = offsetTop;
+        }
+      }
     }
   }
 };
@@ -63,10 +82,10 @@ export default {
 
 <style scoped>
 .chat-window {
-  height: 100%;
-  overflow-y: auto;
-  align-items: flex-start;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  height: 80%; /* Regola l'altezza secondo le tue necessità */
+  overflow-y: auto;
 }
 </style>

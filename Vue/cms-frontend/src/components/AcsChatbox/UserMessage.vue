@@ -16,7 +16,7 @@ export default {
 
 <style scoped>
 .userMessage {
-  background-color: #b60808;
+  background-color: #1C9FD1;
   align-self: flex-end;
   text-align: right;
   color: white; 
