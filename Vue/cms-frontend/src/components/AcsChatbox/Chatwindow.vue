@@ -1,5 +1,10 @@
 <template>
-  <div class="chat-window" ref="chatWindow">
+  <div class="chat-window"
+  ref="chatWindow"
+  :style="{
+        '--chat-window-bg-color': chatContainerBackgroundColor,
+    }">
+
     <component
       v-for="(msg) in messages"
       :is="getComponent(msg.messageType)"
@@ -87,5 +92,6 @@ export default {
   align-items: flex-start;
   height: 80%; /* Regola l'altezza secondo le tue necessità */
   overflow-y: auto;
+  background-color: var(--chat-window-bg-color);
 }
 </style>

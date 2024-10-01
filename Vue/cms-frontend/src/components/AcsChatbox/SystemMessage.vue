@@ -1,7 +1,11 @@
 <template>
-    <Message messageType="systemMessage">
+    <Message messageType="systemMessage"
+    :style="{
+      '--system-message-bg-color': systemMessageBackgroundColor,
+      '--system-message-text-color': systemMessageTextColor
+    }">
       <div class="system-message-content">
-        <img class="system-message-icon" :src="iconUrl" alt="System Icon" />
+        <img class="system-message-icon" :src="eFSIconPath" alt="System Icon" />
         <span class="system-message-text">
           <slot>System message</slot>
         </span>
@@ -13,11 +17,7 @@
   import Message from './Message.vue';
   
   export default {
-    data() {
-        return {
-            iconUrl: require('./assets/logo_3fs.png') 
-        };
-    },
+    inject: ['systemMessageBackgroundColor', 'systemMessageTextColor','eFSIconPath'],
     components: {
       Message
     },
@@ -32,8 +32,8 @@
   
   <style scoped>
   .systemMessage {
-    background-color: transparent; /* Rimuove il colore di sfondo */
-    color: black; /* Colore del testo */
+    background-color: var(--system-message-bg-color); /* Rimuove il colore di sfondo */
+    color: var(--system-message-text-color); /* Colore del testo */
     /*align-self: center; /* Centra il contenitore del messaggio */
     align-self: flex-start;
     /*margin: 0 auto; /* Centra orizzontalmente */

@@ -1,5 +1,9 @@
 <template>
-    <Message messageType="userMessage">
+    <Message messageType="userMessage"
+    :style="{
+      '--user-message-bg-color': userMessageBackgroundColor,
+      '--user-message-text-color': userMessageTextColor
+    }">
       <slot>Default user message</slot>
     </Message>
   </template>
@@ -8,6 +12,7 @@
 import Message from './Message.vue';
 
 export default {
+  inject: ['userMessageBackgroundColor', 'userMessageTextColor'],
   components: {
     Message
   }
@@ -16,9 +21,9 @@ export default {
 
 <style scoped>
 .userMessage {
-  background-color: #1C9FD1;
+  background-color: var(--user-message-bg-color);
+  color: var(--user-message-text-color);  
   align-self: flex-end;
   text-align: right;
-  color: white; 
 }
 </style>

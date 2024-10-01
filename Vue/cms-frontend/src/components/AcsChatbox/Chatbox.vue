@@ -1,7 +1,13 @@
 <!-- Chatbox.vue -->
 <template>
-  <div class="chatbox">
+  <div class="chatbox"
+    :style="{
+      '--send-button-bg-color': sendMessageButtonBackgroundColor,
+      '--send-button-text-color': sendMessageButtonTextColor
+    }"
+  >
     <textarea
+      ref="textarea"
       v-model="newMessage"
       placeholder="Type a message..."
       @input="autoResize"
@@ -16,6 +22,7 @@
 
 <script>
 export default {
+  inject: ['sendMessageButtonBackgroundColor', 'sendMessageButtonTextColor'],
   emits: ['message-sent'],
   data() {
     return {
@@ -37,24 +44,28 @@ export default {
         this.n++;
         this.isSending = false;
         this.newMessage = '';
+        // Assicura che il DOM sia aggiornato prima di ridimensionare la textarea
+        this.$nextTick(() => {
+          this.autoResize();
+        });
       }
     },
     autoResize(event) {
-    const textarea = event.target;
-    // Imposta l'altezza iniziale a 'auto' per ricalcolare correttamente l'altezza se necessario
-    textarea.style.height = 'auto';
-    const maxHeight = 100; // Assicurati che questo valore corrisponda all'altezza massima desiderata
+      const textarea = event ? event.target : this.$refs.textarea;
+      if (textarea) {
+        textarea.style.height = 'auto';
+        const maxHeight = 100; // Altezza massima desiderata in pixel
 
-    // Calcola l'altezza necessaria e applica il massimo consentito
-    const desiredHeight = textarea.scrollHeight;
-    if (desiredHeight > maxHeight) {
-      textarea.style.height = `${maxHeight}px`; // Imposta l'altezza massima
-      textarea.style.overflowY = 'auto'; // Attiva lo scroll solo se l'altezza del contenuto supera quella massima
-    } else {
-      textarea.style.height = `${desiredHeight}px`; // Altrimenti, adatta all'altezza del contenuto
-      textarea.style.overflowY = 'hidden'; // Nasconde la barra di scroll se non necessaria
-    }
-  },
+        const desiredHeight = textarea.scrollHeight;
+        if (desiredHeight > maxHeight) {
+          textarea.style.height = `${maxHeight}px`;
+          textarea.style.overflowY = 'auto';
+        } else {
+          textarea.style.height = `${desiredHeight}px`;
+          textarea.style.overflowY = 'hidden';
+        }
+      }
+    },
   }
 };
 </script>
@@ -63,15 +74,13 @@ export default {
 .chatbox {
   display: flex;      
   align-items: flex-end; 
-  height: 20%;
-  margin-top: 10px;
+  padding: 10px;
 }
 
 .chatbox textarea {
-  padding: 10px;
+  padding: 5px;
   margin-right: 10px;  
   font-size: 14px;
-  line-height: 1.5;
   border: 1px solid #ccc;
   border-radius: 5px;
   resize: none;
@@ -84,13 +93,11 @@ export default {
   font-size: 16px;
   line-height: 1.5;
   border: none;
-  background-color: #16AD8D;
-  color: white;
+  background-color: var(--send-button-bg-color);
+  color: var(--send-button-text-color);
   border-radius: 5px;
   cursor: pointer;
   width: 100px;    
-  height: 40px;       
   box-sizing: border-box;
 }
-
 </style>
