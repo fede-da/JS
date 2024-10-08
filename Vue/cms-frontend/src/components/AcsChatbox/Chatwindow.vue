@@ -77,7 +77,7 @@ export default {
         const lastMessageElement = lastMessageComponent.$el || lastMessageComponent;
         if (lastMessageElement) {
           const offsetTop = lastMessageElement.offsetTop;
-          chatWindow.scrollTop = offsetTop;
+          chatWindow.scrollTop = offsetTop - 50;
         }
       }
     }
@@ -90,7 +90,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  height: 80%; /* Regola l'altezza secondo le tue necessità */
+  height: 90%; /* Regola l'altezza secondo le tue necessità */
   overflow-y: auto;
   background-color: var(--chat-window-bg-color);
 }
