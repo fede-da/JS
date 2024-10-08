@@ -1,16 +1,42 @@
-<template>  
-  <div class="chat-container" 
-  :style="{
-      '--chat-container-bg-color': chatContainerBackgroundColor,
-      '--header-bg-color': headerBackgroundColor,
-      '--header-text-color': headerTextColor
-    }">
-    <div class="chat-window-top-heading">
-      <p class="text-content">3FS Customer Support</p>
+<template>
+  <div>
+    <!-- Pulsante iniziale -->
+    <button
+      v-if="!isChatOpen"
+      @click="isChatOpen = true"
+      class="chat-toggle-button"
+      :style="{
+        '--toggle-button-gradient-start-color': toggleButtonGradientStartColor,
+        '--toggle-button-gradient-end-color': toggleButtonGradientEndColor,
+        '--toggle-button-box-shadow-color': toggleButtonBoxShadowColor
+      }"
+    >
+      <img :src="eFSIconPath" alt="Open Chat" />
+    </button>
+
+    <!-- Chat Container -->
+    <div
+      v-else
+      class="chat-container"
+      :style="{
+        '--chat-container-bg-color': chatContainerBackgroundColor,
+        '--header-bg-color': headerBackgroundColor,
+        '--header-text-color': headerTextColor,
+        '--chat-container-border-color': chatContainerBorderColor,
+        '--close-button-hover-color': closeButtonHoverColor
+      }"
+    >
+      <div class="chat-window-top-heading">
+        <p class="text-content">3FS Customer Support</p>
+        <!-- Pulsante di chiusura -->
+        <button class="close-button" @click="isChatOpen = false">&times;</button>
+      </div>
+      <chat-window />
     </div>
-    <chat-window />
   </div>
 </template>
+
+
   
 <script>
 import ChatWindow from './ChatWindow.vue';
@@ -20,7 +46,11 @@ export default {
   components: {
     ChatWindow,
   },
-
+  data() {
+    return {
+      isChatOpen: false, // Stato della chat: aperta (true) o chiusa (false)
+    };
+  },
   props: {
     headerBackgroundColor: {
       type: String,
@@ -62,6 +92,30 @@ export default {
       type: String,
       default: require('./assets/logo_3fs.png')
     },
+    supportIconPath:{
+      type: String,
+      default: require('./assets/chatbot-icon.png')
+    },
+    toggleButtonGradientStartColor: {
+      type: String,
+      default: '#1C9FD1' // Colore di partenza del gradiente (in alto)
+    },
+    toggleButtonGradientEndColor: {
+      type: String,
+      default: '#16AD8D' // Colore finale del gradiente (in basso)
+    },
+  toggleButtonBoxShadowColor: {
+    type: String,
+    default: 'rgba(0, 0, 0, 0.1)'
+  },
+  chatContainerBorderColor: {
+    type: String,
+    default: '#ccc'
+  },
+  closeButtonHoverColor: {
+    type: String,
+    default: '#ff0000'
+  },
   },
   provide() {
     return {
@@ -74,7 +128,12 @@ export default {
       userMessageTextColor: this.userMessageTextColor,
       sendMessageButtonBackgroundColor: this.sendMessageButtonBackgroundColor,
       sendMessageButtonTextColor: this.sendMessageButtonTextColor,
-      eFSIconPath: this.eFSIconPath
+      eFSIconPath: this.eFSIconPath,
+      toggleButtonBoxShadowColor: this.toggleButtonBoxShadowColor,
+      chatContainerBorderColor: this.chatContainerBorderColor,
+      closeButtonHoverColor: this.closeButtonHoverColor,
+      toggleButtonGradientStartColor: this.toggleButtonGradientStartColor,
+      toggleButtonGradientEndColor: this.toggleButtonGradientEndColor,
     };
   },
 };
@@ -89,13 +148,36 @@ export default {
   flex-direction: column;
   height: 80vh;
   width: 60vw;
-  border: 1px solid #ccc;
+  border: 1px solid var(--chat-container-border-color);
   border-top-left-radius: 48px;
   border-top-right-radius: 48px;
   padding: 10px;
-  padding-top: 8px;  /* Aggiunge spazio in alto per l'effetto */
+  padding-top: 8px;
   background-color: var(--chat-container-bg-color);
-  overflow: hidden;  /* Nasconde gli elementi che escono dai bordi arrotondati */
+  overflow: hidden;
+}
+
+
+.chat-toggle-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(
+    to bottom,
+    var(--toggle-button-gradient-start-color),
+    var(--toggle-button-gradient-end-color)
+  );
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 4px 6px var(--toggle-button-box-shadow-color);
+}
+
+.chat-toggle-button img {
+  width: 30px;
+  height: 30px;
 }
 
 .chat-window-top-heading {
@@ -108,6 +190,22 @@ export default {
   border-top-left-radius: 48px;
   border-top-right-radius: 48px;
 }
+
+.close-button {
+  position: absolute;
+  top: 0px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 34px;
+  color: var(--header-text-color);
+  cursor: pointer;
+}
+
+.close-button:hover {
+  color: var(--close-button-hover-color);
+}
+
 
 .chat-window-top-heading .text-content {
   color: var(--header-text-color);

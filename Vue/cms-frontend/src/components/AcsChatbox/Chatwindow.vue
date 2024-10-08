@@ -33,18 +33,7 @@ export default {
   },
   data() {
     return {
-      messages: [
-        {
-          id: 1,
-          text: 'Ciao, come posso aiutarti?',
-          messageType: 'systemMessage'
-        },
-        {
-          id: 2,
-          text: 'Ho bisogno di informazioni sul vostro servizio.',
-          messageType: 'userMessage'
-        }
-      ]
+      messages: []
     };
   },
   computed: {
