@@ -20,10 +20,10 @@
 
 <script lang="js">
 import Chatbox from './Chatbox.vue';
-import Message from './Message.vue';
-import UserMessage from './UserMessage.vue';
-import SystemMessage from './SystemMessage.vue';
-import ErrorMessage from './ErrorMessage.vue';
+import Message from './MessageComponents/Message.vue';
+import UserMessage from './MessageComponents/UserMessage.vue';
+import SystemMessage from './MessageComponents/SystemMessage.vue';
+import ErrorMessage from './MessageComponents/ErrorMessage.vue';
 
 export default {
   components: {
