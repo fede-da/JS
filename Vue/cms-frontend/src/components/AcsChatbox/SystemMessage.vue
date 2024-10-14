@@ -1,9 +1,6 @@
 <template>
     <Message messageType="systemMessage"
-    :style="{
-      '--system-message-bg-color': systemMessageBackgroundColor,
-      '--system-message-text-color': systemMessageTextColor
-    }">
+    :style="style">
       <div class="system-message-content">
         <img class="system-message-icon" :src="eFSIconPath" alt="System Icon" />
         <span class="system-message-text">
@@ -22,18 +19,16 @@
       Message
     },
     props: {
-      iconSrc: {
-        type: String,
-        default: '.' 
-      }
+      style: {
+        type: Object,
+        default: () => ({})
+      },
     }
   };
   </script>
   
   <style scoped>
   .systemMessage {
-    background-color: var(--system-message-bg-color); /* Rimuove il colore di sfondo */
-    color: var(--system-message-text-color); /* Colore del testo */
     /*align-self: center; /* Centra il contenitore del messaggio */
     align-self: flex-start;
     /*margin: 0 auto; /* Centra orizzontalmente */
@@ -45,6 +40,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: center; /* Centra il contenuto orizzontalmente */
+    background-color: var(--system-message-bg-color); /* Rimuove il colore di sfondo */
   }
   
   .system-message-icon {
@@ -56,6 +52,7 @@
   
   .system-message-text {
     text-align: justify; /* Allinea il testo se necessario */
+    color: var(--system-message-text-color);
   }
   </style>
   

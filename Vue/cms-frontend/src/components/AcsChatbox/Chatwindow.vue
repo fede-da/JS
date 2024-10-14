@@ -18,29 +18,38 @@
   <Chatbox @message-sent="handleNewMessage"></Chatbox>
 </template>
 
-<script>
+<script lang="js">
 import Chatbox from './Chatbox.vue';
 import Message from './Message.vue';
 import UserMessage from './UserMessage.vue';
 import SystemMessage from './SystemMessage.vue';
+import ErrorMessage from './ErrorMessage.vue';
 
 export default {
   components: {
     Chatbox,
     Message,
     UserMessage,
-    SystemMessage
+    SystemMessage,
+    ErrorMessage
   },
   data() {
     return {
-      messages: []
+      messages: [
+      {
+          id: Date.now(),  
+          text: "Messaggio errore di prova, cancellare messaggio da lista di messaggi in ChatWindow successivamente", 
+          messageType: "errorMessage", 
+        }
+      ]
     };
   },
   computed: {
     componentMap() {
       return {
         userMessage: UserMessage,
-        systemMessage: SystemMessage
+        systemMessage: SystemMessage,
+        errorMessage: ErrorMessage,
       };
     }
   },
@@ -69,7 +78,18 @@ export default {
           chatWindow.scrollTop = offsetTop - 50;
         }
       }
-    }
+    },
+    showError(messageText) {
+      const errorMessage = {
+      id: Date.now(),
+      text: messageText,
+      messageType: 'errorMessage',
+    };
+    this.messages.push(errorMessage);
+    this.$nextTick(() => {
+      this.scrollToLastMessage();
+    });
+    },
   }
 };
 </script>
