@@ -36,11 +36,7 @@ export default {
   data() {
     return {
       messages: [
-      {
-          id: Date.now(),  
-          text: "Messaggio errore di prova, cancellare messaggio da lista di messaggi in ChatWindow successivamente", 
-          messageType: "errorMessage", 
-        }
+
       ]
     };
   },
@@ -61,36 +57,70 @@ export default {
       return this.componentMap[messageType] || Message;
     },
     handleNewMessage(message) {
-      message.id = Date.now();
-      this.messages.push(message);
-      this.$nextTick(() => {
-        this.scrollToLastMessage();
-      });
+      this.addMessageFromUser(message.text);
+      this.sendMessageToServer(message.text);
     },
     scrollToLastMessage() {
       const chatWindow = this.$refs.chatWindow;
-      const messages = this.$refs.message;
-      if (chatWindow && messages && messages.length > 0) {
-        const lastMessageComponent = messages[messages.length - 1];
-        const lastMessageElement = lastMessageComponent.$el || lastMessageComponent;
-        if (lastMessageElement) {
-          const offsetTop = lastMessageElement.offsetTop;
-          chatWindow.scrollTop = offsetTop - 50;
-        }
+      if (chatWindow) {
+        this.$nextTick(() => {
+          chatWindow.scrollTop = chatWindow.scrollHeight;
+        });
       }
     },
-    showError(messageText) {
-      const errorMessage = {
-      id: Date.now(),
-      text: messageText,
-      messageType: 'errorMessage',
-    };
-    this.messages.push(errorMessage);
-    this.$nextTick(() => {
+    addMessage(message) {
+      this.messages.push(message);
       this.scrollToLastMessage();
-    });
     },
-  }
+    addMessageFromUser(text) {
+      const userMessage = {
+        id: Date.now(),
+        text: text,
+        messageType: 'userMessage',
+      };
+      this.addMessage(userMessage);
+    },
+    addMessageFromSystem(text) {
+      const systemMessage = {
+        id: Date.now(),
+        text: text,
+        messageType: 'systemMessage',
+      };
+      this.addMessage(systemMessage);
+    },
+    addError(text) {
+      const errorMessage = {
+        id: Date.now(),
+        text: text,
+        messageType: 'errorMessage',
+      };
+      this.addMessage(errorMessage);
+    },
+    async sendMessageToServer(text) {
+      try {
+        // Simulate sending a message to the server
+        const response = await this.mockHttpRequest(text);
+        // If successful, add the system response
+        this.addMessageFromSystem(response.data);
+      } catch (error) {
+        // If there's an error, add an error message
+        this.addError('Failed to send message to the server.');
+      }
+    },
+    mockHttpRequest(text) {
+      // Simulating an HTTP request using a Promise
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          // Simulate a successful response 70% of the time
+          if (Math.random() > 0.3) {
+            resolve({ data: `Server response to "${text}"` });
+          } else {
+            reject(new Error('Network error'));
+          }
+        }, 2000); // Simulate network delay
+      });
+    },
+  },
 };
 </script>
 

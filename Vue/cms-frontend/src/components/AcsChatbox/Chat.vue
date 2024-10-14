@@ -31,7 +31,7 @@
         <!-- Pulsante di chiusura -->
         <button class="close-button" @click="isChatOpen = false">&times;</button>
       </div>
-      <chat-window />
+      <chat-window ref="chatWindow" />
     </div>
   </div>
 </template>
