@@ -116,6 +116,15 @@ export default {
     type: String,
     default: '#ff0000'
   },
+  spinnerPrimaryColor: {
+      type: String,
+      default: '#1C9FD1'
+    },
+    // The following could be white
+    spinnerSecondaryColor: {
+      type: String,
+      default: '#16AD8D'
+    },
   },
   provide() {
     return {
@@ -134,6 +143,8 @@ export default {
       closeButtonHoverColor: this.closeButtonHoverColor,
       toggleButtonGradientStartColor: this.toggleButtonGradientStartColor,
       toggleButtonGradientEndColor: this.toggleButtonGradientEndColor,
+      spinnerPrimaryColor: this.spinnerPrimaryColor,
+      spinnerSecondaryColor: this.spinnerSecondaryColor
     };
   },
 };
@@ -151,6 +162,8 @@ export default {
   border: 1px solid var(--chat-container-border-color);
   border-top-left-radius: 48px;
   border-top-right-radius: 48px;
+  border-bottom-left-radius: 48px;
+  border-bottom-right-radius: 48px;
   padding: 10px;
   padding-top: 8px;
   background-color: var(--chat-container-bg-color);

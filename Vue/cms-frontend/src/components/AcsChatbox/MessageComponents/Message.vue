@@ -26,7 +26,7 @@ export default {
 }
 
 .default-message {
-  background-color: yellow;
+  background-color: transparent;
   align-self: flex-start;
   text-align: left;
 }

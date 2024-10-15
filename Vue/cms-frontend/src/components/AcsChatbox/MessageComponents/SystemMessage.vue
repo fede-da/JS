@@ -1,7 +1,10 @@
 <template>
   <Message
     messageType="systemMessage"
-    :style="style"
+    :style="{
+      '--spinner-primary-color': spinnerPrimaryColor,
+      '--spinner-secondary-color': spinnerSecondaryColor
+    }"
   >
     <div class="system-message-content">
       <img
@@ -33,16 +36,14 @@ export default {
   inject: [
     'systemMessageBackgroundColor',
     'systemMessageTextColor',
+    'spinnerPrimaryColor',
+    'spinnerSecondaryColor',
     'eFSIconPath',
   ],
   components: {
     Message,
   },
   props: {
-    style: {
-      type: Object,
-      default: () => ({}),
-    },
     text: {
       type: String,
       default: '',
@@ -91,11 +92,17 @@ export default {
 }
 
 .spinner {
-  width: 20px;
-  height: 20px;
-  border: 2px solid #ccc;
-  border-top-color: #333;
+  width: 25px;
+  height: 25px;
   border-radius: 50%;
+  background: conic-gradient(
+    var(--spinner-primary-color),
+    var(--spinner-secondary-color)
+  );
+  -webkit-mask: 
+    radial-gradient(farthest-side, transparent calc(100% - 6px), black calc(100% - 5px));
+  mask: 
+    radial-gradient(farthest-side, transparent calc(100% - 6px), black calc(100% - 5px));
   animation: spin 1s linear infinite;
 }
 
@@ -104,4 +111,6 @@ export default {
     transform: rotate(360deg);
   }
 }
+
+
 </style>
