@@ -5,15 +5,16 @@
         '--chat-window-bg-color': chatContainerBackgroundColor,
     }">
 
-    <component
-      v-for="(msg) in messages"
-      :is="getComponent(msg.messageType)"
-      :key="msg.id"
-      v-bind="msg"
-      ref="message"
-    >
-      {{ msg.text }}
-    </component>
+<component
+  v-for="(msg) in messages"
+  :is="getComponent(msg.messageType)"
+  :key="msg.id"
+  v-bind="msg"
+  ref="message"
+>
+{{ msg.text }}
+</component>
+
   </div>  
   <Chatbox @message-sent="handleNewMessage"></Chatbox>
 </template>
@@ -24,6 +25,8 @@ import Message from './MessageComponents/Message.vue';
 import UserMessage from './MessageComponents/UserMessage.vue';
 import SystemMessage from './MessageComponents/SystemMessage.vue';
 import ErrorMessage from './MessageComponents/ErrorMessage.vue';
+import { reactive } from 'vue';
+
 
 export default {
   components: {
@@ -35,9 +38,7 @@ export default {
   },
   data() {
     return {
-      messages: [
-
-      ]
+      messages: [],
     };
   },
   computed: {
@@ -73,20 +74,22 @@ export default {
       this.scrollToLastMessage();
     },
     addMessageFromUser(text) {
-      const userMessage = {
+      const userMessage = reactive({
         id: Date.now(),
         text: text,
         messageType: 'userMessage',
-      };
+      });
       this.addMessage(userMessage);
     },
-    addMessageFromSystem(text) {
-      const systemMessage = {
+    addMessageFromSystem(text = '', hasError = false) {
+      const systemMessage = reactive({
         id: Date.now(),
         text: text,
         messageType: 'systemMessage',
-      };
+        hasError: hasError,
+      });
       this.addMessage(systemMessage);
+      return systemMessage; // Return the reactive message object
     },
     addError(text) {
       const errorMessage = {
@@ -97,14 +100,18 @@ export default {
       this.addMessage(errorMessage);
     },
     async sendMessageToServer(text) {
+      // Add a system message with empty text to show the loading spinner
+      const systemMessage = this.addMessageFromSystem();
+
       try {
         // Simulate sending a message to the server
         const response = await this.mockHttpRequest(text);
-        // If successful, add the system response
-        this.addMessageFromSystem(response.data);
+        // If successful, update the system message's text
+        systemMessage.text = response.data;
       } catch (error) {
-        // If there's an error, add an error message
-        this.addError('Failed to send message to the server.');
+        // If there's an error, set hasError to true
+        systemMessage.hasError = true;
+        systemMessage.text = error.message || 'An error occurred.';
       }
     },
     mockHttpRequest(text) {
@@ -112,7 +119,7 @@ export default {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           // Simulate a successful response 70% of the time
-          if (Math.random() > 0.3) {
+          if (Math.random() < 0.7) {
             resolve({ data: `Server response to "${text}"` });
           } else {
             reject(new Error('Network error'));
