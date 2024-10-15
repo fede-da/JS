@@ -3,7 +3,8 @@
   <div class="chatbox"
     :style="{
       '--send-button-bg-color': sendMessageButtonBackgroundColor,
-      '--send-button-text-color': sendMessageButtonTextColor
+      '--send-button-text-color': sendMessageButtonTextColor,
+      '--chat-container-border-color': chatContainerBorderColor,
     }"
   >
     <textarea
@@ -15,14 +16,14 @@
       style="resize: none; overflow-y: hidden;"
     ></textarea>
     <button @click="emitMessage" :disabled="isSending">
-      Send
+      ↑
     </button>
   </div>
 </template>
 
 <script>
 export default {
-  inject: ['sendMessageButtonBackgroundColor', 'sendMessageButtonTextColor'],
+  inject: ['sendMessageButtonBackgroundColor', 'sendMessageButtonTextColor','chatContainerBorderColor'],
   emits: ['message-sent'],
   data() {
     return {
@@ -74,30 +75,45 @@ export default {
 .chatbox {
   display: flex;      
   align-items: flex-end; 
+  border: 2px solid var(--chat-container-border-color);
+  border-radius: 48px;
   padding: 10px;
 }
 
 .chatbox textarea {
-  padding: 5px;
+  padding: 0px;
   margin-right: 10px;  
   font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  margin-left: 10px;  
+  border: 0px solid #ccc;
+  border-radius: 6px;
   resize: none;
   overflow-y: hidden;  
   flex-grow: 1;
 }
 
+.chatbox textarea:focus {
+  border-color: transparent; 
+  outline: none; /* Removes the default focus outline */
+}
+
+
 .chatbox button {
-  padding: 10px 20px;
-  font-size: 16px;
-  line-height: 1.5;
+  width: 50px; 
+  height: 50px;
   border: none;
+  border-radius: 50%;
+  padding: 10px 20px;
+  font-size: 26px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Horizontally centers content */
+  padding: 0; /* Remove padding to maintain the circle shape */
+  line-height: 1.5;
   background-color: var(--send-button-bg-color);
   color: var(--send-button-text-color);
-  border-radius: 5px;
   cursor: pointer;
-  width: 100px;    
   box-sizing: border-box;
 }
 </style>

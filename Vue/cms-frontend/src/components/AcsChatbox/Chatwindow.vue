@@ -129,4 +129,5 @@ export default {
   overflow-y: auto;
   background-color: var(--chat-window-bg-color);
 }
+
 </style>
