@@ -24,7 +24,6 @@ import Chatbox from './Chatbox.vue';
 import Message from './MessageComponents/Message.vue';
 import UserMessage from './MessageComponents/UserMessage.vue';
 import SystemMessage from './MessageComponents/SystemMessage.vue';
-import ErrorMessage from './MessageComponents/ErrorMessage.vue';
 import { reactive } from 'vue';
 
 
@@ -33,8 +32,7 @@ export default {
     Chatbox,
     Message,
     UserMessage,
-    SystemMessage,
-    ErrorMessage
+    SystemMessage
   },
   data() {
     return {
@@ -46,7 +44,6 @@ export default {
       return {
         userMessage: UserMessage,
         systemMessage: SystemMessage,
-        errorMessage: ErrorMessage,
       };
     }
   },
@@ -90,14 +87,6 @@ export default {
       });
       this.addMessage(systemMessage);
       return systemMessage; // Return the reactive message object
-    },
-    addError(text) {
-      const errorMessage = {
-        id: Date.now(),
-        text: text,
-        messageType: 'errorMessage',
-      };
-      this.addMessage(errorMessage);
     },
     async sendMessageToServer(text) {
       // Add a system message with empty text to show the loading spinner
