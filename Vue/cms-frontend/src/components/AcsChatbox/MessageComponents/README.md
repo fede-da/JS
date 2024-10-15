@@ -26,8 +26,8 @@ It instantiates a **Message** changing its base behaviour, all **UserMessage** c
 
 It instantiates a **Message** changing its base behaviour, all **SystemMessage** components show:
 - An icon (on the left, usually 3FS icon)
-- The message content (centered, after the icon)
+- The message content (it is either the correct response, loading indicator or error message)
 
-## ErrorMessage
+# Error Handling
 
-It instantiates a **SystemMessage** changing its base behaviour, all **ErrorMessage** components have an *Error:* text before the message content and override the **SystemMessage** text color using *::v-deep* Vue's property.
+Errors are shown withing SystemMessage components.
